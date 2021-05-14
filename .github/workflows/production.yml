@@ -78,7 +78,7 @@ jobs:
 
   laravel-deploy-prod:
     if: ${{ github.ref == 'refs/heads/master'}}
-    needs: laravel-test-prod
+    # needs: laravel-test-prod
     runs-on: ubuntu-20.04
 
     steps:

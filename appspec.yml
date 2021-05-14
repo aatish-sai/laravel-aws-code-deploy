@@ -1,0 +1,11 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /var/www/laravel
+
+hooks:
+  AfterInstall:
+    - location: scripts/deploy_laravel.sh
+      runas: root

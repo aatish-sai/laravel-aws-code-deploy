@@ -79,7 +79,7 @@ jobs:
   laravel-deploy-prod:
     if: ${{ github.ref == 'refs/heads/master'}}
     needs: laravel-test-prod
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-20.04microsoft/variable-substitution@v1 
 
     steps:
     - name: "Configure AWS Credentials"
@@ -89,11 +89,21 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
         aws-region: us-east-1
 
-    - name: "Deploy to CodeDeploy"
+    - name: "Replace Variabel"
+      uses: microsoft/variable-substitution@v1 
+      with:
+        files: appspec.yml
+      env:
+        files.destination: /test/
+
+    - name: "Test"
       run: |
-        aws deploy create-deployment \
-          --application-name CodeDeployGithub-Demo \
-          --deployment-config-name CodeDeployDefault.OneAtATime \
-          --deployment-group-name CodeDeployGitHubDemo-DepGrp \
-          --description "My GitHub deployment demo" \
-          --github-location repository=aatish-sai/laravel-aws-code-deploy,commitId=${{github.sha}}
+        cat appspec.yml
+    # - name: "Deploy to CodeDeploy"
+    #   run: |
+    #     aws deploy create-deployment \
+    #       --application-name CodeDeployGithub-Demo \
+    #       --deployment-config-name CodeDeployDefault.OneAtATime \
+    #       --deployment-group-name CodeDeployGitHubDemo-DepGrp \
+    #       --description "My GitHub deployment demo" \
+    #       --github-location repository=aatish-sai/laravel-aws-code-deploy,commitId=${{github.sha}}

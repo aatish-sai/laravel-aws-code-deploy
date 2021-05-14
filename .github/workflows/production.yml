@@ -88,3 +88,12 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY}}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
         aws-region: us-east-1
+
+    - name: "Deploy to CodeDeploy"
+      run: |
+        aws deploy create-deployment \
+          --application-name CodeDeployGithub-Demo \
+          --deployment-config-name CodeDeployDefault.OneAtATime \
+          --deployment-group-name CodeDeployGitHubDemo-DepGrp \
+          --description "My GitHub deployment demo" \
+          --github-location repository=aatish-sai/laravel-aws-code-deploy,commitId=${{github.sha}}

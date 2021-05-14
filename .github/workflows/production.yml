@@ -79,7 +79,7 @@ jobs:
   laravel-deploy-prod:
     if: ${{ github.ref == 'refs/heads/master'}}
     needs: laravel-test-prod
-    runs-on: ubuntu-20.04microsoft/variable-substitution@v1 
+    runs-on: ubuntu-20.04
 
     steps:
     - name: "Configure AWS Credentials"
